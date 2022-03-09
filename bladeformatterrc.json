@@ -1,0 +1,7 @@
+{
+    "indentSize": 4,
+    "wrapAttributues": "auto",
+    "wrapLineLength": 120,
+    "endWithNewLine": true,
+    "useTabs": false
+}

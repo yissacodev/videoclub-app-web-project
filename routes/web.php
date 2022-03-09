@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,30 +16,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [HomeController::class, 'getHome']);
 
-Route::get('login', function () {
-    return view('auth.login');
-});
+// Route::get('login', function () {
+//     return view('auth.login');
+// });
 
-Route::get('catalog', function () {
-    return view('catalog.index');
-});
+// Route::get('catalog', [CatalogController::class, 'getIndex']);
+// Route::get('catalog/show/{id}', [CatalogController::class, 'getShow']);
+// Route::get('catalog/create', [CatalogController::class, 'getCreate']);
+// Route::get('catalog/edit/{id}', [CatalogController::class, 'getEdit']);
 
-Route::get('catalog/show/{id}', function ($id) {
-    return view('catalog.show', array('id'=>$id));
+//Rutas de controlador agrupadas
+Route::controller(CatalogController::class)->middleware('auth')->group(function(){
+    Route::get('catalog', 'getIndex');
+    Route::get('catalog/show/{id}', 'getShow');
+    Route::get('catalog/create', 'getCreate');
+    Route::get('catalog/edit/{id}', 'getEdit');
+    Route::post('catalog/create', 'postCreate');
+    Route::put('catalog/edit/{id}', 'putEdit');
 });
+Auth::routes();
 
-Route::get('catalog/create', function () {
-    return view('catalog.create');
-});
+// Route::post('logout', function () {
+//     return "Saliendo de la sesión";
+// });
 
-Route::get('catalog/edit/{id}', function ($id) {
-    return view('catalog.edit', array('id'=>$id));
-});
-
-Route::post('logout', function () {
-    return "Saliendo de la sesión";
-});
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
