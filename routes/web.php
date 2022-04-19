@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\APICatalogController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', [HomeController::class, 'getHome']);
-
+Route::get('ejemplos/ejemplo', [HomeController::class, 'getHome']);
 // Route::get('login', function () {
 //     return view('auth.login');
 // });
@@ -35,11 +36,16 @@ Route::controller(CatalogController::class)->middleware('auth')->group(function(
     Route::get('catalog/edit/{id}', 'getEdit');
     Route::post('catalog/create', 'postCreate');
     Route::put('catalog/edit/{id}', 'putEdit');
+    // Route::put('catalog/edit/{id}', 'putEdit');
+    Route::put('catalog/rent/{id}', 'putRent');
+    Route::put('catalog/return/{id}', 'putReturn');
+    Route::delete('catalog/delete/{id}', 'deleteMovie');
+
 });
 Auth::routes();
 
-// Route::post('logout', function () {
-//     return "Saliendo de la sesión";
-// });
+
+/*Rutas de APICatalogController */
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
